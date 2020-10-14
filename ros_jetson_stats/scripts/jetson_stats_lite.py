@@ -53,7 +53,7 @@ class JetsonStatsLite:
             jetson_stats.swap_used_gb = 0.001 * float(data.status[19].values[0].value)
             jetson_stats.swap_total_gb = 0.001 * float(data.status[19].values[1].value)
             jetson_stats.cpu_temp_celsius = float(data.status[23].values[6].value.rstrip("C"))
-            jetson_stats.gpu_load_percent = float(data.status[14].values[0].value.rstrip("%"))
+            jetson_stats.gpu_load_percent = int(data.status[14].values[0].value.rstrip("%"))
             jetson_stats.gpu_temp_celsius = float(data.status[23].values[4].value.rstrip("C"))
             self.pub_jetson_stats_lite.publish(jetson_stats)
 
