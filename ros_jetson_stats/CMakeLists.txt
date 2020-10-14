@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.4.6)
 project(ros_jetson_stats)
 
-find_package(catkin REQUIRED rospy genmsg std_msgs)
+find_package(catkin REQUIRED rospy genmsg std_msgs jetson_stats_msgs)
 
 catkin_python_setup()
 
@@ -31,6 +31,9 @@ catkin_package()
 include_directories()
 
 catkin_install_python(PROGRAMS scripts/jetson_stats.py
+                      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+catkin_install_python(PROGRAMS scripts/jetson_stats_plotteable.py
                       DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 # Install param and launch folders

@@ -25,12 +25,25 @@ WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
 OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, 
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
-<launch>
-    <!-- Run ROS jetson stats with default configuration -->
-    <node pkg="ros_jetson_stats" type="jetson_stats.py" name="ros_jetson_stats" required="true" output="screen"/>
+<package format="2">
+  <name>ros_jetson_stats</name>
+  <version>3.0.0</version>
+  <description>ros_jetson_stats is a bridge from jetson-stats to your ROS controller</description>
 
-    <!-- Enable a base diagnostic aggregator to read the status of your NVIDIA Jetson -->
-    <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator" clear_params="true">
-        <rosparam command="load" file="$(find ros_jetson_stats)/param/jtop.yaml"/>
-    </node>
-</launch>
+  <maintainer email="raffaello@rnext.it">Raffaello Bonghi</maintainer>
+  <license>MIT</license>
+  
+  <url type="website">https://rnext.it</url>
+  <url type="repository">http://ros.org/wiki/ros_jetson_stats</url>
+  <author email="raffaello@rnext.it">Raffaello Bonghi</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>genmsg</build_depend>
+
+  <depend>rospy</depend>
+  <depend>std_msgs</depend>
+  <depend>diagnostic_msgs</depend>
+  <depend>jetson_stats_msgs</depend>
+
+</package>

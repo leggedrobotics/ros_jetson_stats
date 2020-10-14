@@ -34,6 +34,7 @@ from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
 from ros_jetson_stats.srv import nvpmodel, nvpmodelResponse, jetson_clocks, jetson_clocksResponse, fan, fanResponse
 from datetime import timedelta
 import jtop
+from jetson_stats_msgs.msg import JetsonStats
 # Import Diagnostic status converters
 from ros_jetson_stats.utils import (
     other_status,
@@ -141,6 +142,9 @@ class ROSJtop:
         # Update status jtop
         rospy.logdebug("jtop message %s" % rospy.get_time())
         self.pub.publish(self.arr)
+        # Additional publisher for plottable output of most important jetson state info
+        #self.jetson_stats.gpu_load = 32.0
+        #self.pub_jetson_stats.publish(jetson_stats)
 
 
 def wrapper():

@@ -26,21 +26,20 @@ OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,
 EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 -->
 <package format="2">
-  <name>ros_jetson_stats</name>
+  <name>jetson_stats_msgs</name>
   <version>3.0.0</version>
-  <description>ros_jetson_stats is a bridge from jetson-stats to your ROS controller</description>
+  <description>Message definitions for the ros_jetson_stats gpu monitoring package</description>
 
-  <maintainer email="raffaello@rnext.it">Raffaello Bonghi</maintainer>
+  <maintainer email="timonh@ethz.ch">Timon Homberger</maintainer>
+  <author email="timonh@ethz.ch">Timon Homberger</author>
   <license>MIT</license>
-  
-  <url type="website">https://rnext.it</url>
-  <url type="repository">http://ros.org/wiki/ros_jetson_stats</url>
-  <author email="raffaello@rnext.it">Raffaello Bonghi</author>
 
   <buildtool_depend>catkin</buildtool_depend>
 
   <build_depend>genmsg</build_depend>
+  <build_depend>message_generation</build_depend>
 
+  <depend>message_runtime</depend>
   <depend>rospy</depend>
   <depend>std_msgs</depend>
   <depend>diagnostic_msgs</depend>
