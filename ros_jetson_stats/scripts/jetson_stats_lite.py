@@ -35,18 +35,26 @@ class JetsonStatsLite:
         # data.status[13] -> /jtop/CPU/CPU8
         # data.status[14] -> /jtop/GPU
         # data.status[15] -> /jtop/GPU/gpu
-        # data.status[16] ->
-        # data.status[17] ->
-        # data.status[18] ->
+        # data.status[16] -> /jtop/Memory
+        # data.status[17] -> /jtop/Memory/emc
+        # data.status[18] -> /jtop/Memory/ram
+        # data.status[19] -> /jtop/Memory/swap
+        # data.status[20] -> /jtop/Power
+        # data.status[21] -> /jtop/Power/power
+        # data.status[22] -> /jtop/Temperatures
+        # data.status[23] -> /jtop/Temperatures/temp
+        # data.status[24] -> /jtop
 
-
-  
         # Read out the GPU load
-        if (len(data.status) > 15):
-            print (data.status[14].name)
-            print (data.status[14].values[0].value)
-
-            jetson_stats.gpu_load = 0.01 * float(data.status[14].values[0].value.rstrip("%"))
+        if (len(data.status) > 23):            
+            jetson_stats.ram_used_gb = 0.000001 * float(data.status[18].values[0].value)
+            jetson_stats.ram_shared_gb = 0.0000001 * float(data.status[18].values[1].value)
+            jetson_stats.ram_total_gb = 0.0000001 * float(data.status[18].values[2].value)
+            jetson_stats.swap_used_gb = 0.001 * float(data.status[19].values[0].value)
+            jetson_stats.swap_total_gb = 0.001 * float(data.status[19].values[1].value)
+            jetson_stats.cpu_temp_celsius = float(data.status[23].values[6].value.rstrip("C"))
+            jetson_stats.gpu_load_percent = 0.01 * float(data.status[14].values[0].value.rstrip("%"))
+            jetson_stats.gpu_temp_celsius = float(data.status[23].values[4].value.rstrip("C"))
             self.pub_jetson_stats_lite.publish(jetson_stats)
 
     def __init__(self):
@@ -54,7 +62,7 @@ class JetsonStatsLite:
         self.sub_jetson_diagnostics = rospy.Subscriber("/diagnostics_agg", DiagnosticArray, self.jetson_diagnostics_callback)
 
         # Initialization jetson stats ros publisher (for plotteable output)
-        self.pub_jetson_stats_lite = rospy.Publisher('/jetson_stats', JetsonStats, queue_size=1)
+        self.pub_jetson_stats_lite = rospy.Publisher('/jetson_stats_lite', JetsonStats, queue_size=1)
 
 def jetson_stats_lite():
     # Init ros node
