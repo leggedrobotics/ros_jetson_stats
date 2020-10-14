@@ -43,5 +43,5 @@ rosrun rqt_runtime_monitor rqt_runtime_monitor
 
 # Plottable Jetson Stats
 
-For visualizing a subset of jetson stats using rqt_plot/rqt_multiplot the topic '/jetson_stats_lite' was added. 
+For visualizing a subset of jetson stats using rqt_plot/rqt_multiplot the topic `/jetson_stats_lite` was added. 
 It contains information on RAM, SWAP, GPU load, as well as temperatures of CPU and GPU.
