@@ -40,7 +40,6 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
   <build_depend>message_generation</build_depend>
 
   <depend>message_runtime</depend>
-  <depend>rospy</depend>
   <depend>std_msgs</depend>
-  <depend>diagnostic_msgs</depend>
+
 </package>
