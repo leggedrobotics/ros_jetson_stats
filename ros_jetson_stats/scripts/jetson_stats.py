@@ -60,14 +60,10 @@ class ROSJtop:
         # Define Diagnostic array message
         # http://docs.ros.org/api/diagnostic_msgs/html/msg/DiagnosticStatus.html
         self.arr = DiagnosticArray()
-        
-        self.jetson_stats = JetsonStats()
-
         # Initialization ros publisher
         self.pub = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=1)
-
+        # Additional publisher for some plottable output
         self.pub_jetson_stats_lite = rospy.Publisher('/jetson_stats', JetsonStats, queue_size=1)
-
         # Initialize services server
         rospy.Service('/jtop/nvpmodel', nvpmodel, self.nvpmodel_service)
         rospy.Service('/jtop/jetson_clocks', jetson_clocks, self.jetson_clocks_service)
