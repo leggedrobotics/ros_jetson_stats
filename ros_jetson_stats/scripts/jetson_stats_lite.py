@@ -76,4 +76,3 @@ def jetson_stats_lite():
 
 if __name__ == '__main__':
     jetson_stats_lite()
-# EOF

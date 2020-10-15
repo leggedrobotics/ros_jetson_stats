@@ -6,4 +6,5 @@ float32 swap_used_gb
 float32 swap_total_gb
 float32 cpu_temp_celsius
 uint32 gpu_load_percent
+uint32 gpu_freq_khz
 float32 gpu_temp_celsius
