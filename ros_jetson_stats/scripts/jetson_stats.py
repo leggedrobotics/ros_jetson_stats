@@ -36,6 +36,10 @@ from datetime import timedelta
 import jtop
 from jetson_stats_msgs.msg import JetsonStatus
 
+# Constants for ouput conversion
+KBYTE2MBYTE = 10e-3
+PERCENT2SHARE = 10e-2
+
 # Import Diagnostic status converters
 from ros_jetson_stats.utils import (
     other_status,
@@ -49,10 +53,6 @@ from ros_jetson_stats.utils import (
     power_status,
     temp_status,
     emc_status)
-
-# Constants for ouput conversion
-KBYTE2MBYTE = 10e-3
-PERCENT2SHARE = 10e-2
 
 class ROSJtop:
 
