@@ -11,7 +11,7 @@ find_package(catkin REQUIRED
 
 add_message_files(
   FILES
-    JetsonStats.msg
+    JetsonStatus.msg
 )
 
 generate_messages(

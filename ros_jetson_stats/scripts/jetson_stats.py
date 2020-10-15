@@ -34,7 +34,8 @@ from diagnostic_msgs.msg import DiagnosticArray, DiagnosticStatus, KeyValue
 from ros_jetson_stats.srv import nvpmodel, nvpmodelResponse, jetson_clocks, jetson_clocksResponse, fan, fanResponse
 from datetime import timedelta
 import jtop
-from jetson_stats_msgs.msg import JetsonStats
+from jetson_stats_msgs.msg import JetsonStatus
+
 # Import Diagnostic status converters
 from ros_jetson_stats.utils import (
     other_status,
@@ -49,6 +50,9 @@ from ros_jetson_stats.utils import (
     temp_status,
     emc_status)
 
+# Constants for ouput conversion
+KBYTE2MBYTE = 10e-3
+PERCENT2SHARE = 10e-2
 
 class ROSJtop:
 
@@ -63,7 +67,7 @@ class ROSJtop:
         # Initialization ros publisher
         self.pub = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=1)
         # Additional publisher for some plottable output
-        self.pub_jetson_stats_lite = rospy.Publisher('/jetson_stats', JetsonStats, queue_size=1)
+        self.pub_jetson_status = rospy.Publisher('/jetson_status', JetsonStatus, queue_size=1)
         # Initialize services server
         rospy.Service('/jtop/nvpmodel', nvpmodel, self.nvpmodel_service)
         rospy.Service('/jtop/jetson_clocks', jetson_clocks, self.jetson_clocks_service)
@@ -147,25 +151,25 @@ class ROSJtop:
         # More condensed and plottable stats for Jetson supervision
         if (len(self.arr.status) == 18): # The number and order of status entries depends on params/jtop.yaml !!
             # Create Message
-            jetson_stats = JetsonStats()    
+            jetson_status = JetsonStatus()    
             # Pass on the time stamp
-            jetson_stats.header.stamp = self.arr.header.stamp  
+            jetson_status.header.stamp = self.arr.header.stamp  
             # RAM
-            jetson_stats.ram_used_gb = 0.0000001 * float(self.arr.status[10].values[0].value)
-            jetson_stats.ram_shared_gb = 0.0000001 * float(self.arr.status[10].values[1].value)
-            jetson_stats.ram_total_gb = 0.0000001 * float(self.arr.status[10].values[2].value)
+            jetson_status.ram_used = KBYTE2MBYTE * float(self.arr.status[10].values[0].value)
+            jetson_status.ram_shared = KBYTE2MBYTE * float(self.arr.status[10].values[1].value)
+            jetson_status.ram_total = KBYTE2MBYTE * float(self.arr.status[10].values[2].value)
             # SWAP
-            jetson_stats.swap_used_gb = 0.001 * float(self.arr.status[11].values[0].value)
-            jetson_stats.swap_total_gb = 0.001 * float(self.arr.status[11].values[1].value)
+            jetson_status.swap_used = float(self.arr.status[11].values[0].value)
+            jetson_status.swap_total = float(self.arr.status[11].values[1].value)
             # CPU temp
-            jetson_stats.cpu_temp_celsius = float(self.arr.status[13].values[6].value.rstrip("C"))
-            # GPU stats
-            jetson_stats.gpu_load_percent = int(self.arr.status[9].values[0].value.rstrip("%"))
-            jetson_stats.gpu_freq_khz = int(self.arr.status[9].values[1].value)
+            jetson_status.cpu_temp = float(self.arr.status[13].values[6].value.rstrip("C"))
+            # GPU info
+            jetson_status.gpu_load = PERCENT2SHARE * int(self.arr.status[9].values[0].value.rstrip("%"))
+            jetson_status.gpu_freq = int(self.arr.status[9].values[1].value)
             # GPU temp
-            jetson_stats.gpu_temp_celsius = float(self.arr.status[13].values[4].value.rstrip("C"))
+            jetson_status.gpu_temp = float(self.arr.status[13].values[4].value.rstrip("C"))
             # Publish
-            self.pub_jetson_stats_lite.publish(jetson_stats)
+            self.pub_jetson_status.publish(jetson_status)
 
 def wrapper():
     # Initialization ros node
