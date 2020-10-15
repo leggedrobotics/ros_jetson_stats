@@ -67,7 +67,7 @@ class ROSJtop:
         # Initialization ros publisher
         self.pub = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=1)
         # Additional publisher for some plottable output
-        self.pub_jetson_status = rospy.Publisher('/jetson_status', JetsonStatus, queue_size=1)
+        self.pub_jetson_status = rospy.Publisher('/gpu_monitor_jetson', JetsonStatus, queue_size=1)
         # Initialize services server
         rospy.Service('/jtop/nvpmodel', nvpmodel, self.nvpmodel_service)
         rospy.Service('/jtop/jetson_clocks', jetson_clocks, self.jetson_clocks_service)
