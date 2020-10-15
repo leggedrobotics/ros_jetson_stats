@@ -37,8 +37,8 @@ import jtop
 from jetson_stats_msgs.msg import JetsonStatus
 
 # Constants for ouput conversion
-KBYTE2MBYTE = 10e-3
-PERCENT2SHARE = 10e-2
+KBYTE2MBYTE = 1e-03
+PERCENT2SHARE = 1e-02
 
 # Import Diagnostic status converters
 from ros_jetson_stats.utils import (
@@ -164,8 +164,8 @@ class ROSJtop:
             # CPU temp
             jetson_status.cpu_temp = float(self.arr.status[13].values[6].value.rstrip("C"))
             # GPU info
-            jetson_status.gpu_load = PERCENT2SHARE * int(self.arr.status[9].values[0].value.rstrip("%"))
-            jetson_status.gpu_freq = int(self.arr.status[9].values[1].value)
+            jetson_status.gpu_load = PERCENT2SHARE * float(self.arr.status[9].values[0].value.rstrip("%"))
+            jetson_status.gpu_freq = float(self.arr.status[9].values[1].value)
             # GPU temp
             jetson_status.gpu_temp = float(self.arr.status[13].values[4].value.rstrip("C"))
             # Publish
