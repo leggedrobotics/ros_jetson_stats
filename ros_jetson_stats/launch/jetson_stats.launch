@@ -34,6 +34,4 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
         <rosparam command="load" file="$(find ros_jetson_stats)/param/jtop.yaml"/>
     </node>
 
-    <node pkg="ros_jetson_stats" type="jetson_stats_lite.py" name="ros_jetson_stats_lite" required="true" output="screen"/>
-
 </launch>

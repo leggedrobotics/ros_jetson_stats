@@ -66,7 +66,7 @@ class ROSJtop:
         # Initialization ros publisher
         self.pub = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=1)
 
-        self.pub_jetson_stats_lite = rospy.Publisher('/jetson_stats_lite', JetsonStats, queue_size=1)
+        self.pub_jetson_stats_lite = rospy.Publisher('/jetson_stats', JetsonStats, queue_size=1)
 
         # Initialize services server
         rospy.Service('/jtop/nvpmodel', nvpmodel, self.nvpmodel_service)
@@ -148,28 +148,28 @@ class ROSJtop:
         # Update status jtop
         rospy.logdebug("jtop message %s" % rospy.get_time())
         self.pub.publish(self.arr)
-
-        print ("do I ever get here 1")
-        print (len(self.arr.status))
-        if (len(self.arr.status) == 18): 
-            print ("do I ever get here 2")
+        # More condensed and plottable stats for Jetson supervision
+        if (len(self.arr.status) == 18): # The number and order of status entries depends on params/jtop.yaml !!
+            # Create Message
             jetson_stats = JetsonStats()    
             # Pass on the time stamp
             jetson_stats.header.stamp = self.arr.header.stamp  
-            print (self.arr.status[9].name)     
+            # RAM
             jetson_stats.ram_used_gb = 0.0000001 * float(self.arr.status[10].values[0].value)
             jetson_stats.ram_shared_gb = 0.0000001 * float(self.arr.status[10].values[1].value)
             jetson_stats.ram_total_gb = 0.0000001 * float(self.arr.status[10].values[2].value)
+            # SWAP
             jetson_stats.swap_used_gb = 0.001 * float(self.arr.status[11].values[0].value)
             jetson_stats.swap_total_gb = 0.001 * float(self.arr.status[11].values[1].value)
+            # CPU temp
             jetson_stats.cpu_temp_celsius = float(self.arr.status[13].values[6].value.rstrip("C"))
+            # GPU stats
             jetson_stats.gpu_load_percent = int(self.arr.status[9].values[0].value.rstrip("%"))
             jetson_stats.gpu_freq_khz = int(self.arr.status[9].values[1].value)
+            # GPU temp
             jetson_stats.gpu_temp_celsius = float(self.arr.status[13].values[4].value.rstrip("C"))
+            # Publish
             self.pub_jetson_stats_lite.publish(jetson_stats)
-        # Additional publisher for plottable output of most important jetson state info
-
-
 
 def wrapper():
     # Initialization ros node
