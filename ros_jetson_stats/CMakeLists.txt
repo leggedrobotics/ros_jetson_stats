@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.4.6)
 project(ros_jetson_stats)
 
-find_package(catkin REQUIRED rospy genmsg std_msgs)
+find_package(catkin REQUIRED rospy genmsg std_msgs jetson_stats_msgs)
 
 catkin_python_setup()
 

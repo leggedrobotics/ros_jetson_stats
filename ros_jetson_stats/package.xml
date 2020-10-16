@@ -41,7 +41,9 @@ EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <build_depend>genmsg</build_depend>
 
+  <depend>diagnostic_msgs</depend>
+  <depend>jetson_stats_msgs</depend>
   <depend>rospy</depend>
   <depend>std_msgs</depend>
-  <depend>diagnostic_msgs</depend>
+
 </package>
