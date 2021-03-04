@@ -165,7 +165,7 @@ class ROSJtop:
             jetson_status.cpu_temp = float(self.arr.status[13].values[6].value.rstrip("C"))
             # GPU info
             jetson_status.gpu_load = PERCENT2SHARE * float(self.arr.status[9].values[0].value.rstrip("%"))
-            jetson_status.gpu_freq = float(self.arr.status[9].values[1].value)
+            jetson_status.gpu_freq = int(self.arr.status[9].values[1].value)
             # GPU temp
             jetson_status.gpu_temp = float(self.arr.status[13].values[4].value.rstrip("C"))
             # Publish
