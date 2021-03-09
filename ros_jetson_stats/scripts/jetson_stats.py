@@ -168,8 +168,43 @@ class ROSJtop:
             jetson_status.gpu_freq = int(self.arr.status[9].values[1].value)
             # GPU temp
             jetson_status.gpu_temp = float(self.arr.status[13].values[4].value.rstrip("C"))
+            # CPU info
+            #for i in range(1, 8)
+            jetson_status.cpu1_load = PERCENT2SHARE * float(self.arr.status[1].values[0].value.rstrip("%"))
+            jetson_status.cpu1_freq = int(self.arr.status[1].values[1].value)
+            jetson_status.cpu1_freq_unit = self.arr.status[1].values[2].value
+            jetson_status.cpu1_governor = self.arr.status[1].values[3].value
+            jetson_status.cpu2_load = PERCENT2SHARE * float(self.arr.status[2].values[0].value.rstrip("%"))
+            jetson_status.cpu2_freq = int(self.arr.status[2].values[1].value)
+            jetson_status.cpu2_freq_unit = self.arr.status[2].values[2].value
+            jetson_status.cpu2_governor = self.arr.status[2].values[3].value
+            jetson_status.cpu3_load = PERCENT2SHARE * float(self.arr.status[3].values[0].value.rstrip("%"))
+            jetson_status.cpu3_freq = int(self.arr.status[3].values[1].value)
+            jetson_status.cpu3_freq_unit = self.arr.status[3].values[2].value
+            jetson_status.cpu3_governor = self.arr.status[3].values[3].value
+            jetson_status.cpu4_load = PERCENT2SHARE * float(self.arr.status[4].values[0].value.rstrip("%"))
+            jetson_status.cpu4_freq = int(self.arr.status[4].values[1].value)
+            jetson_status.cpu4_freq_unit = self.arr.status[4].values[2].value
+            jetson_status.cpu4_governor = self.arr.status[4].values[3].value
+            jetson_status.cpu5_load = PERCENT2SHARE * float(self.arr.status[5].values[0].value.rstrip("%"))
+            jetson_status.cpu5_freq = int(self.arr.status[5].values[1].value)
+            jetson_status.cpu5_freq_unit = self.arr.status[5].values[2].value
+            jetson_status.cpu5_governor = self.arr.status[5].values[3].value
+            jetson_status.cpu6_load = PERCENT2SHARE * float(self.arr.status[6].values[0].value.rstrip("%"))
+            jetson_status.cpu6_freq = int(self.arr.status[6].values[1].value)
+            jetson_status.cpu6_freq_unit = self.arr.status[6].values[2].value
+            jetson_status.cpu6_governor = self.arr.status[6].values[3].value
+            jetson_status.cpu7_load = PERCENT2SHARE * float(self.arr.status[7].values[0].value.rstrip("%"))
+            jetson_status.cpu7_freq = int(self.arr.status[7].values[1].value)
+            jetson_status.cpu7_freq_unit = self.arr.status[7].values[2].value
+            jetson_status.cpu7_governor = self.arr.status[7].values[3].value
+            jetson_status.cpu8_load = PERCENT2SHARE * float(self.arr.status[8].values[0].value.rstrip("%"))
+            jetson_status.cpu8_freq = int(self.arr.status[8].values[1].value)
+            jetson_status.cpu8_freq_unit = self.arr.status[8].values[2].value
+            jetson_status.cpu8_governor = self.arr.status[8].values[3].value
             # Publish
             self.pub_jetson_status.publish(jetson_status)
+              
 
 def wrapper():
     # Initialization ros node
