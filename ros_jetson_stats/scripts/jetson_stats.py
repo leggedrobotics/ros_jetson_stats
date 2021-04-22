@@ -170,11 +170,16 @@ class ROSJtop:
             jetson_status.gpu_temp = float(self.arr.status[13].values[4].value.rstrip("C"))
             # CPU info
             for i in range(1, 9):
-                if (i == 1 or True):
+                if self.arr.status[i].message.lower() != "off":
                     jetson_status.cpu_load += [PERCENT2SHARE * float(self.arr.status[i].values[0].value.rstrip("%"))]
                     jetson_status.cpu_freq += [int(self.arr.status[i].values[1].value)]
                     jetson_status.cpu_freq_unit += [self.arr.status[i].values[2].value]
                     jetson_status.cpu_governor += [self.arr.status[i].values[3].value]
+                else:
+                    jetson_status.cpu_load += [0]
+                    jetson_status.cpu_freq += [0]
+                    jetson_status.cpu_freq_unit += [""]
+                    jetson_status.cpu_governor += [""]
 
             # Publish
             self.pub_jetson_status.publish(jetson_status)
