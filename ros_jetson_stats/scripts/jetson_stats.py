@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 # Copyright (C) 2020, Raffaello Bonghi <raffaello@rnext.it>
 # All rights reserved
