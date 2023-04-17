@@ -82,7 +82,7 @@ class ROSJtop:
         # Extract board information
         board = self.jetson.board
         # Define hardware name
-        self.hardware = board["info"]["machine"]
+        self.hardware = board["platform"]["Machine"]
         # Board status message
         self.board_status = board_status(self.hardware, board, 'board')
         # Set callback
